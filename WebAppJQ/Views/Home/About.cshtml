@@ -1,20 +1,11 @@
 ﻿@model IEnumerable<WebAppJQ.Models.Customer>
-@{
-    ViewBag.Title = "Company selection";
-}
-<h2>@ViewBag.Title</h2>
-
-<h3>Customers</h3>
-<hr />
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-
 <hr />
 <div class="row">
     <div class="col-md-4">
         <div class="form-group">
             <label class="control-label"> Select Customer</label>
-
             <select id="products" name="products" class="form-control" asp-items="@ViewBag.Company"></select>
 
 
@@ -29,8 +20,6 @@
 
 
 </div>
-
-
 
 <script type="text/javascript">
 
