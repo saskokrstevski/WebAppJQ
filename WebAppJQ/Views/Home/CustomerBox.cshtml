@@ -1,0 +1,26 @@
+﻿
+@model IEnumerable<WebAppJQ.Models.Customer>
+
+<table>
+    <tr>
+        <td>Customer ID&nbsp;&nbsp;&nbsp;</td>
+        <td>Company&nbsp;&nbsp;&nbsp;</td>
+        <td>Customer Name&nbsp;&nbsp;&nbsp;</td>
+        <td>Address&nbsp;&nbsp;&nbsp;</td>
+        <td>City&nbsp;&nbsp;&nbsp;</td>
+    </tr>
+
+    @foreach (var item in Model.Select((x, i) =>
+  new { Data = x, Index = i }))
+    {
+<tr>
+    <td>@(item.Index + 1)</td>
+
+    <td>@item.Data.custId</td>
+    <td>@item.Data.company</td>
+    <td>@item.Data.name</td>
+    <td>@item.Data.address</td>
+    <td>@item.Data.city</td>
+</tr>
+    }
+</table>
