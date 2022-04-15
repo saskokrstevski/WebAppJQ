@@ -1,0 +1,109 @@
+﻿@model IEnumerable<WebAppJQ.Models.Customer>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@*<div class="jumbotron">
+    <h1>ASP.NET</h1>
+    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>*@
+
+<h4>Customers</h4>
+<hr />
+<table class="table table-bordered" id="CustomerGrid">
+    <tr>
+        <th>Customer Id</th>
+        <th>Company</th>
+        <th>Customer Name</th>
+        <th>Address</th>
+        <th>City</th>
+        <th></th>
+    </tr>
+    @foreach (var customer in Model)
+    {
+        <tr>
+            <td>@customer.custId</td>
+            <td>@customer.company</td>
+            <td>@customer.name</td>
+            <td>@customer.address</td>
+            <td>@customer.city</td>
+            <td><a class="btn btn-primary details" href="javascript:void(0)">View</a></td>
+        </tr>
+    }
+</table>
+
+<!--Bootstrap Pop Up modal-->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Customer details</h4>
+            </div>
+            <div class="modal-body" id="ModalBody">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--End of Bootstrap Pop-Up modal-->
+
+@section scripts{
+    <script type="text/javascript">
+    $(function () {
+
+
+        $("#CustomerGrid .details").click(function () {
+                //get customer id of row clicked
+                var custID = $(this).closest("tr").find("td").eq(0).html();
+                $.ajax({
+                    type: "POST", //Method type
+                    url: "/Home/Details", //url to load partial view
+                    data: '{custID: "' + custID + '" }', //send customer id
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "html",
+                    success: function (response) {
+                        $('#ModalBody').html(response);
+                        $('#myModal').modal('show');
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+@*<div class="row">
+        <div class="col-md-4">
+            <h2>Getting started</h2>
+            <p>
+                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+                enables a clean separation of concerns and gives you full control over markup
+                for enjoyable, agile development.
+            </p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Get more libraries</h2>
+            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Web Hosting</h2>
+            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        </div>
+    </div>*@
